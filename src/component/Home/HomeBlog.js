@@ -61,7 +61,7 @@ function HomeBlog() {
     return (
         <Fragment>
             <section className='container mx-auto mt-12 mb-14' style={{ marginTop: "300px" }}>
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9  [&>*:nth-child(odd)]:bg-accent'>
+                <div className='px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-9  [&>*:nth-child(odd)]:bg-accent'>
                     {
                         blogs.map(blog => <HomeBlogCard
                             key={blog.id} blog={blog}
@@ -86,5 +86,8 @@ function HomeBlog() {
         </Fragment>
     )
 }
+
+
+
 
 export default HomeBlog

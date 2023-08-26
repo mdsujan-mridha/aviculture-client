@@ -6,8 +6,8 @@ const HomeBlogCard = ({ blog }) => {
         <Fragment>
             <div
                 className='
-            flex flex-col text-center justify-center items-center  rounded-md text-white pb-5 pt-6 
-             bg-secondary
+                 flex flex-col text-center justify-center items-center  rounded-md text-white pb-5 pt-6 
+                 bg-secondary w-80
              '>
                 <h1 className='text-3xl font-medium font-["Cabin"] pb-6'>{title}</h1>
                 <figure>
