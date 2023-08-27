@@ -29,7 +29,7 @@ const Login = () => {
         }
         if (isAuthenticated) {
             toast.success("Logged in");
-            navigate("/");
+            navigate("/profile");
         }
     }, [dispatch, error, isAuthenticated, navigate])
 

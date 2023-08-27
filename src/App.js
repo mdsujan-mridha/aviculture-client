@@ -9,7 +9,12 @@ import Login from './component/User/Login';
 import Register from './component/User/Register';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+import Profile from './component/User/Profile';
 function App() {
+
+  axios.defaults.withCredentials = true;
+
   return (
     <Fragment>
       <Navbar />
@@ -19,6 +24,7 @@ function App() {
         <Route path='/home' element={<Home />} ></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
+        <Route path='/profile' element={<Profile />}></Route>
       </Routes>
 
       <Footer />
