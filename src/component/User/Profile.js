@@ -2,10 +2,8 @@ import React, { Fragment } from 'react';
 import profileBg from "../images/login & Register/profile.png";
 import userImg from "../images/login & Register/user.png";
 import { ChangeCircle, Edit, ListAlt, } from '@mui/icons-material';
-const Profile = () => {
-    
-    
 
+const Profile = () => {
     return (
         <Fragment>
             <div className="w-full"
@@ -28,7 +26,6 @@ const Profile = () => {
                                 <button className='btn text-lg font-semibold bg-teal-400 border-0 text-white'><ChangeCircle /> Change password </button>
                                 <button className='btn text-lg font-semibold bg-teal-400 border-0 text-white'><ListAlt /> Orders </button>
                             </div>
-
                         </div>
                     </div>
                 </div>

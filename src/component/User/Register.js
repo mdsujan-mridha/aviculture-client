@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import registerBgImage from "../images/login & Register/register.jpg";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, register } from '../Action/userAction';
 import { toast } from 'react-toastify';
@@ -15,6 +15,7 @@ const Register = () => {
     const nameRef = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
+    const location = useLocation();
 
     const registerHandler = (e) => {
         e.preventDefault();
@@ -28,7 +29,8 @@ const Register = () => {
         console.log(myForm);
         dispatch(register(myForm))
     }
-
+    //  redirect user 
+    const redirect = location.search ? location.search.split("=")[1] : "/account";
     useEffect(() => {
         if (error) {
             toast.error(error);
@@ -36,9 +38,9 @@ const Register = () => {
         }
         if (isAuthenticated) {
             toast.success("Register successfully");
-            navigate("/profile")
+            navigate(redirect);
         }
-    }, [error, dispatch, isAuthenticated, navigate]);
+    }, [error, dispatch, isAuthenticated, navigate,redirect]);
     return (
         <Fragment>
             {

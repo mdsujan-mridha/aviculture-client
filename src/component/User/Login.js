@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useRef } from 'react';
 import loginBgImage from "../images/login & Register/login.jpg";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, login } from "../Action/userAction";
 import { toast } from 'react-toastify';
@@ -13,7 +13,7 @@ const Login = () => {
     const { loading, error, isAuthenticated } = useSelector((state) => state.user);
     const emailRef = useRef();
     const passwordRef = useRef();
-
+    const location = useLocation();
     const loginHandler = (e) => {
         e.preventDefault();
         const email = emailRef.current.value;
@@ -21,7 +21,8 @@ const Login = () => {
         dispatch(login(email, password));
     }
 
-
+//  redirect user 
+const redirect=location.search?location.search.split("=")[1]:"/account";
     useEffect(() => {
         if (error) {
             toast.error(error);
@@ -29,9 +30,9 @@ const Login = () => {
         }
         if (isAuthenticated) {
             toast.success("Logged in");
-            navigate("/profile");
+            navigate(redirect);
         }
-    }, [dispatch, error, isAuthenticated, navigate])
+    }, [dispatch, error, isAuthenticated, navigate,redirect])
 
 
     return (
