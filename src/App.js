@@ -16,6 +16,12 @@ import ProtectedRoute from './component/route/ProtectedRoute';
 import { useSelector } from 'react-redux';
 import store from './store';
 import { loadUser } from './component/Action/userAction';
+import ProductsDetails from './component/products/ProductsDetails';
+import About from './component/About/About';
+import Contact from './component/Contact/Contact';
+import Cart from './component/Cart/Cart';
+import Shipping from './component/Cart/Shipping';
+import ConfirmOrder from './component/Cart/ConfirmOrder';
 function App() {
 
   axios.defaults.withCredentials = true;
@@ -33,12 +39,17 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} ></Route>
         <Route path='/home' element={<Home />} ></Route>
+        <Route path='/about' element={<About />}></Route>
+        <Route path='/contact' element={<Contact />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
 
         <Route path='/products' element={<Products />}></Route>
-
+        <Route path='/productDetails' element={<ProductsDetails />}></Route>
         {/* protected route  */}
+        <Route path='/cart' element={<Cart />}></Route>
+        <Route path='/shipping' element={<Shipping />}></Route>
+        <Route path='/order/confirm' element={<ConfirmOrder/>}></Route>
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
           <Route path='/profile' element={<Profile />}></Route>
         </Route>

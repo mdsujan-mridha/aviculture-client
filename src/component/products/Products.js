@@ -17,6 +17,7 @@ const birdData = [
         behavior: "Sparrows are social birds and often seen in flocks. They are known for their cheerful and chattering calls, which are a common sound in many urban and rural areas. Sparrows primarily feed on seeds, grains, insects, and small invertebrates. They forage on the ground and can also be seen perched on bushes and trees.",
         significance: "Sparrows have a long history of association with humans and are often considered symbols of simplicity and resilience. They are also important ecologically as they play a role in controlling insect populations and are a food source for various predators.",
         price: 230,
+        Stock:4,
     },
     {
         _id: 2,
@@ -27,6 +28,7 @@ const birdData = [
         behavior: "Sparrows are social birds and often seen in flocks. They are known for their cheerful and chattering calls, which are a common sound in many urban and rural areas. Sparrows primarily feed on seeds, grains, insects, and small invertebrates. They forage on the ground and can also be seen perched on bushes and trees.",
         significance: "Sparrows have a long history of association with humans and are often considered symbols of simplicity and resilience. They are also important ecologically as they play a role in controlling insect populations and are a food source for various predators.",
         price: 230,
+        Stock:4,
     },
     {
         _id: 3,
@@ -37,6 +39,7 @@ const birdData = [
         behavior: "Sparrows are social birds and often seen in flocks. They are known for their cheerful and chattering calls, which are a common sound in many urban and rural areas. Sparrows primarily feed on seeds, grains, insects, and small invertebrates. They forage on the ground and can also be seen perched on bushes and trees.",
         significance: "Sparrows have a long history of association with humans and are often considered symbols of simplicity and resilience. They are also important ecologically as they play a role in controlling insect populations and are a food source for various predators.",
         price: 230,
+        Stock:4,
     },
     {
         _id: 4,
@@ -47,6 +50,7 @@ const birdData = [
         behavior: "Sparrows are social birds and often seen in flocks. They are known for their cheerful and chattering calls, which are a common sound in many urban and rural areas. Sparrows primarily feed on seeds, grains, insects, and small invertebrates. They forage on the ground and can also be seen perched on bushes and trees.",
         significance: "Sparrows have a long history of association with humans and are often considered symbols of simplicity and resilience. They are also important ecologically as they play a role in controlling insect populations and are a food source for various predators.",
         price: 230,
+        Stock:4,
     },
 ]
 
@@ -63,12 +67,18 @@ const Products = () => {
 
     // state for category 
     const [category, setCategory] = useState("");
-    const [price, setPrice] = useState([10, 1000])
+    const [price, setPrice] = useState([10, 1000]);
+    const [search, setSearch] = useState("");
 
     const handlePrice = (e) => {
         setPrice(e.target.value)
     }
     console.log(category);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value)
+    }
 
     return (
         <Fragment>
@@ -78,6 +88,17 @@ const Products = () => {
                     <div className='flex justify-between px-12 items-center border-b-2 border-accent pb-5 pt-5'>
                         <h2 className='text-neutral text-2xl font-bold'> Filter </h2>
                         <button className='btn btn-accent'>Reset </button>
+                    </div>
+                    <div className='py-10 border-b-2 border-accent'>
+                        <p className='text-neutral text-2xl font-bold px-2 lg:px-12'> Search Product </p>
+                        <div className='px-5 pt-10'>
+                            <input type="text"
+                                placeholder='Search Product'
+                                className='w-full h-12 border-2 px-5 rounded-2xl outline-none'
+                                onChange={handleSearch}
+                                value={search}
+                            />
+                        </div>
                     </div>
                     <div className='py-10 border-b-2 border-accent'>
                         <p className='text-neutral text-2xl font-bold px-2 lg:px-12 md:px-2'> Filter by category </p>
@@ -109,7 +130,7 @@ const Products = () => {
                         {
                             birdData &&
                             birdData?.map((bird) => (
-                                <BirdCard key={bird._id} bird={bird}/>
+                                <BirdCard key={bird._id} bird={bird} />
                             ))
                         }
                     </div>

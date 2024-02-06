@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadUser, logout } from '../Action/userAction';
 import store from "../../store";
-import { ListAlt, Logout, PersonOutline } from '@mui/icons-material';
+import { ListAlt, Logout, PersonOutline, ShoppingCart } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
 const Navbar = () => {
@@ -31,8 +31,8 @@ const Navbar = () => {
                         </label>
                         <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-secondary rounded-box w-52">
                             <li><Link to="/">Home</Link></li>
-                            <li><Link>About</Link></li>
-                            <li><Link>Contact</Link></li>
+                            <li><Link to="/about">About</Link></li>
+                            <li><Link to="/contact">Contact</Link></li>
                             <li><Link to="/products">Shop</Link></li>
                             <li>
                                 <Link>Articles</Link>
@@ -50,8 +50,8 @@ const Navbar = () => {
                 <div className="navbar-center hidden lg:flex">
                     <ul className="menu menu-horizontal px-1 text-xl font-bold">
                         <li><Link to="/">Home</Link></li>
-                        <li><Link>About</Link></li>
-                        <li><Link>Contact</Link></li>
+                        <li><Link to="/about">About</Link></li>
+                        <li><Link to="/contact">Contact</Link></li>
                         <li tabIndex={0}>
                             <details>
                                 <summary>Articles</summary>
@@ -75,6 +75,7 @@ const Navbar = () => {
                                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-secondary gap-8 rounded-box w-52 mt-5 px-12">
                                         <li><Link to="/profile"> <PersonOutline /> Profile</Link></li>
                                         <li><Link><ListAlt /> Orders</Link></li>
+                                        <li> <Link to="/cart"> <ShoppingCart /> cart </Link> </li>
                                         <li><button onClick={logoutUser} ><Logout /> Logout</button></li>
                                     </ul>
                                 </div>
