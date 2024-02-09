@@ -22,7 +22,7 @@ const Login = () => {
     }
 
 //  redirect user 
-const redirect=location.search?location.search.split("=")[1]:"/account";
+const redirect=location.search?location.search.split("=")[1]:"/profile";
     useEffect(() => {
         if (error) {
             toast.error(error);

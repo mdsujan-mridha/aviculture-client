@@ -18,7 +18,7 @@ const ConfirmOrder = () => {
     const shippingPrice = subtotal > 1000 ? 0 : 200;
     const tax = subtotal * 0.05;
     const totalPrice = subtotal + shippingPrice + tax;
-    const address = `${shippingInfo.address},${shippingInfo.city},${shippingInfo.state},${shippingInfo.pinCode},${shippingInfo.country},${shippingInfo?.phoneNumber}`;
+    const address = `${shippingInfo?.address},${shippingInfo?.city},${shippingInfo?.state},${shippingInfo?.pinCode},${shippingInfo?.country},${shippingInfo?.phoneNumber}`;
     const proceedToPayment = () => {
         const data = {
             subtotal,
@@ -45,7 +45,7 @@ const ConfirmOrder = () => {
                             </div>
                             <div>
                                 <p>Phone:</p>
-                                <span>{shippingInfo.phoneNumber}</span>
+                                <span>{shippingInfo?.phoneNumber}</span>
                             </div>
                             <div>
                                 <p>Address:</p>
@@ -60,7 +60,7 @@ const ConfirmOrder = () => {
                                 cartItems.map((item) => (
                                     <div key={item.product}>
                                         <img src={item.image} alt="Product" />
-                                        <Link to={`/product/${item.product}`}>
+                                        <Link to={`/products/${item.product}`}>
                                             {item.name}
                                         </Link>{" "}
                                         <span>

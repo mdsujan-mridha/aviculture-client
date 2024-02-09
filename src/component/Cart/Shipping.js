@@ -10,27 +10,26 @@ import "./shipping.css";
 
 const Shipping = () => {
     const dispatch = useDispatch();
-    const { ShippingInfo } = useSelector((state) => state?.cart);
-    // console.log(ShippingInfo);
-    const [address, setAddress] = useState(ShippingInfo?.address);
-    const [city, setCity] = useState(ShippingInfo?.city);
-    const [state, setState] = useState(ShippingInfo?.state);
-    const [country, setCountry] = useState(ShippingInfo?.country);
-    const [pinCode, setPinCode] = useState(ShippingInfo?.pinCode);
-    const [phoneNumber, setPhoneNumber] = useState(ShippingInfo?.phoneNumber);
+    const { shippingInfo } = useSelector((state) => state.cart);
+    // navigation 
     const navigate = useNavigate();
+    // state 
+    const [address, setAddress] = useState(shippingInfo?.address);
+    const [city, setCity] = useState(shippingInfo?.city);
+    const [state, setState] = useState(shippingInfo?.state);
+    const [country, setCountry] = useState(shippingInfo?.country);
+    const [pinCode, setPinCode] = useState(shippingInfo?.pinCode);
+    const [phoneNumber, setPhoneNumber] = useState(shippingInfo?.phoneNumber);
 
     const shippingSubmit = (e) => {
+
         e.preventDefault();
         if (phoneNumber.length < 10 || phoneNumber.length > 10) {
             toast.warn("Phone number must be 10 digit");
             return;
-
         }
-        dispatch(
-            saveShippingInfo({ address, city, state, country, pinCode, phoneNumber })
-        );
-        navigate("/order/confirm")
+        dispatch(saveShippingInfo({ address, city, state, country, pinCode, phoneNumber }))
+        navigate("/order/confirm");
     }
 
     return (

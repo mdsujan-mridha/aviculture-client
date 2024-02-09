@@ -1,5 +1,5 @@
 
-import { Fragment, useEffect } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import './App.css';
 import { Route, Routes } from 'react-router-dom';
 import Home from './component/Home/Home';
@@ -22,14 +22,31 @@ import Contact from './component/Contact/Contact';
 import Cart from './component/Cart/Cart';
 import Shipping from './component/Cart/Shipping';
 import ConfirmOrder from './component/Cart/ConfirmOrder';
+import Dashboard from './component/Admin/Dashboard';
+import { Elements } from '@stripe/react-stripe-js';
+import Payment from './component/Cart/Payment';
+import { loadStripe } from '@stripe/stripe-js';
+import Success from './component/Cart/Success';
+import MyOrder from './component/Order/MyOrder';
+import Posts from './component/Post/Posts';
+import PostDetails from './component/Post/PostDetails';
+import ProductsList from './component/Admin/ProductsList';
 function App() {
 
   axios.defaults.withCredentials = true;
   // import logged user 
-  const { isAuthenticated } = useSelector((state) => state.user);
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const [stripeApiKey, setStripeApiKey] = useState("");
 
+  async function getStripeApiKey() {
+    const { data } = await axios.get("http://localhost:5000/api/v1/stripeapikey");
+    setStripeApiKey(data.stripeApiKey);
+    // console.log(data);
+  }
   useEffect(() => {
     store.dispatch(loadUser());
+    getStripeApiKey();
+
   }, [])
 
   return (
@@ -43,16 +60,65 @@ function App() {
         <Route path='/contact' element={<Contact />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
-
         <Route path='/products' element={<Products />}></Route>
-        <Route path='/productDetails' element={<ProductsDetails />}></Route>
+        <Route path='/products/:id' element={<ProductsDetails />}></Route>
+        <Route path='/blogs' element={<Posts />}></Route>
+        <Route path='/blogs/:id' element={<PostDetails />}></Route>
+
+        {/* admin route  */}
+        <Route
+          path="/admin/dashboard"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/admin/products"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <ProductsList />
+            </ProtectedRoute>
+          }
+        ></Route>
         {/* protected route  */}
-        <Route path='/cart' element={<Cart />}></Route>
-        <Route path='/shipping' element={<Shipping />}></Route>
-        <Route path='/order/confirm' element={<ConfirmOrder/>}></Route>
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
+
+          <Route path='/cart' element={<Cart />}></Route>
+          <Route path='/shipping' element={<Shipping />}></Route>
+          <Route path='/order/confirm' element={<ConfirmOrder />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/orders' element={<MyOrder />}></Route>
+          <Route>
+            {stripeApiKey && (
+              <Route
+                path="/process/payment"
+                element={
+                  <Elements stripe={loadStripe(stripeApiKey)} >
+                    <Payment stripeApiKey={stripeApiKey} />
+                  </Elements>
+                }
+              >
+
+              </Route>
+            )}
+          </Route>
+          <Route path='/success' element={<Success />}></Route>
         </Route>
+
+        {/* admin route  */}
+
+
       </Routes>
 
       <Footer />

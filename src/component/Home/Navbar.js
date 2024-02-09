@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { loadUser, logout } from '../Action/userAction';
 import store from "../../store";
-import { ListAlt, Logout, PersonOutline, ShoppingCart } from '@mui/icons-material';
+import { Dashboard, ListAlt, Logout, PersonOutline, ShoppingCart } from '@mui/icons-material';
 import { toast } from 'react-toastify';
 
 const Navbar = () => {
@@ -19,7 +19,7 @@ const Navbar = () => {
     useEffect(() => {
         store.dispatch(loadUser())
     }, [dispatch])
-    console.log(user);
+    // console.log(user);
 
     return (
         <Fragment>
@@ -34,15 +34,9 @@ const Navbar = () => {
                             <li><Link to="/about">About</Link></li>
                             <li><Link to="/contact">Contact</Link></li>
                             <li><Link to="/products">Shop</Link></li>
-                            <li>
-                                <Link>Articles</Link>
-                                <ul className="p-2">
-                                    <li><Link>Birds Food & Treats</Link></li>
-                                    <li><Link>First Aid & Medication</Link></li>
-                                    <li><Link> Vitamin Supplements</Link></li>
-                                </ul>
-                            </li>
-                            <li><Link> AviManage</Link></li>
+                            <li><Link to="/blogs"> Articles </Link></li>
+
+
                         </ul>
                     </div>
                     <Link className="btn btn-ghost normal-case text-3xl text-white">AVI <span className='text-orange-500'> CULTURE</span> </Link>
@@ -52,18 +46,9 @@ const Navbar = () => {
                         <li><Link to="/">Home</Link></li>
                         <li><Link to="/about">About</Link></li>
                         <li><Link to="/contact">Contact</Link></li>
-                        <li tabIndex={0}>
-                            <details>
-                                <summary>Articles</summary>
-                                <ul className="p-2 bg-secondary">
-                                    <li><Link>Birds Food & Treats</Link></li>
-                                    <li><Link>First Aid & Medication</Link></li>
-                                    <li><Link> Vitamin Supplements</Link></li>
-                                </ul>
-                            </details>
-                        </li>
+                        <li><Link to="/blogs"> Articles </Link></li>
                         <li><Link to="/products">Shop</Link></li>
-                        <li><Link> AviManage</Link></li>
+
                     </ul>
                 </div>
                 <div className="navbar-end">
@@ -74,8 +59,15 @@ const Navbar = () => {
                                     <label tabIndex={0} className="btn m-1"> {user ? user?.name : "Hi"} </label>
                                     <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-secondary gap-8 rounded-box w-52 mt-5 px-12">
                                         <li><Link to="/profile"> <PersonOutline /> Profile</Link></li>
-                                        <li><Link><ListAlt /> Orders</Link></li>
+                                        <li><Link to="/orders"><ListAlt /> Orders</Link></li>
                                         <li> <Link to="/cart"> <ShoppingCart /> cart </Link> </li>
+                                        {
+                                            user && isAuthenticated && user.role === "admin" && (
+                                                <li>
+                                                    <Link to="/admin/dashboard"><Dashboard /> Dashboard</Link>
+                                                </li>
+                                            )
+                                        }
                                         <li><button onClick={logoutUser} ><Logout /> Logout</button></li>
                                     </ul>
                                 </div>
