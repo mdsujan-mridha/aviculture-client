@@ -14,6 +14,8 @@ const Cart = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { cartItems } = useSelector((state) => state.cart);
+     
+    console.log(cartItems);
 
     const increaseQuantity = (id, quantity, stock) => {
         const newQty = quantity + 1;
@@ -41,7 +43,7 @@ const Cart = () => {
 
     return (
         <Fragment>
-            {cartItems.length === 2 ? (
+            {cartItems.length === 0 ? (
                 <div className="emptyCart">
                     <RemoveShoppingCart />
 

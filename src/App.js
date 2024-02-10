@@ -31,6 +31,10 @@ import MyOrder from './component/Order/MyOrder';
 import Posts from './component/Post/Posts';
 import PostDetails from './component/Post/PostDetails';
 import ProductsList from './component/Admin/ProductsList';
+import OrderDetails from './component/Order/OrderDetails';
+import NewProduct from './component/Admin/NewProduct';
+import OrderList from './component/Admin/OrderList';
+import UpdateOrder from './component/Admin/UpdateOrder';
 function App() {
 
   axios.defaults.withCredentials = true;
@@ -91,7 +95,46 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
-        {/* protected route  */}
+        {/* create product  */}
+        <Route
+          path="/admin/product"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <NewProduct />
+            </ProtectedRoute>
+          }
+        ></Route>
+        {/* order list  */}
+        <Route
+          path="/admin/orders"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <OrderList />
+            </ProtectedRoute>
+          }
+        ></Route>
+        {/* update oder  */}
+        <Route
+          path="/admin/order/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <UpdateOrder />
+            </ProtectedRoute>
+          }
+        ></Route>
+        {/* protected route --user */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
 
           <Route path='/cart' element={<Cart />}></Route>
@@ -99,6 +142,7 @@ function App() {
           <Route path='/order/confirm' element={<ConfirmOrder />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
           <Route path='/orders' element={<MyOrder />}></Route>
+          <Route path='/order/:id' element={<OrderDetails />}></Route>
           <Route>
             {stripeApiKey && (
               <Route
