@@ -11,17 +11,13 @@ import { getPost } from '../Action/postAction';
 import PostCard from './PostCard';
 
 const productCategory = [
-    "Beans",
-    "Radish",
-    "Cauliflower",
-    "Cabbage",
-    "Pumpkin",
-    "Capsicum",
-    "Pea",
-    "Haicha",
-    "Lemon",
-    "Carrot",
-    "Tomato",
+    "Ornithology",
+    "Birdwatching",
+    "Techniques",
+    "Nectar",
+    "Live Insects",
+    "Grit",
+    "Suet"
 
 ]
 

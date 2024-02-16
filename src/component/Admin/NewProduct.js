@@ -25,13 +25,13 @@ const NewProduct = () => {
     console.log(success);
     // set category 
     const categories = [
-        "Laptop",
-        "Footwear",
-        "Bottom",
-        "Tops",
-        "Attire",
-        "Camera",
-        "SmartPhones",
+        "Ornithology",
+        "Birdwatching",
+        "Techniques",
+        "Nectar",
+        "Live Insects",
+        "Grit",
+        "Suet"
     ];
 
     useEffect(() => {

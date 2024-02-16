@@ -2,22 +2,36 @@ import React, { Fragment, useEffect } from 'react';
 import profileBg from "../images/login & Register/profile.png";
 import userImg from "../images/login & Register/user.png";
 import { ChangeCircle, Edit, ListAlt, } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, Link } from 'react-router-dom';
 import Loader from '../Layout/Loader';
+import { toast } from 'react-toastify';
+import { clearErrors } from '../Action/userAction';
 
 const Profile = () => {
 
-    const { user, loading, isAuthenticated } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
+    const { user, loading, isAuthenticated, error } = useSelector((state) => state.user);
+
+
 
 
     const navigate = useNavigate();
 
     useEffect(() => {
+
+        if (error) {
+            toast.error(error);
+            dispatch(clearErrors())
+        }
+
         if (isAuthenticated === false) {
             navigate("/login");
         }
-    }, [navigate, isAuthenticated]);
+        // dispatch(loadUser());
+
+    }, [navigate, isAuthenticated, error, dispatch]);
 
     // console.log(user);
 

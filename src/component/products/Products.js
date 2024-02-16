@@ -6,11 +6,14 @@ import BirdCard from './BirdCard';
 import { clearErrors, getProduct } from '../Action/productAction';
 import { toast } from 'react-toastify';
 import Loader from '../Layout/Loader';
+import Pagination from 'react-js-pagination';
+import "./products.css";
+
 
 const categories = [
-    "Peanuts",
-    "Mealworms",
-    "Sunflower Seeds",
+    "Ornithology",
+    "Birdwatching",
+    "Techniques",
     "Nectar",
     "Live Insects",
     "Grit",
@@ -33,20 +36,27 @@ const Products = () => {
 
     // state for category 
     const [category, setCategory] = useState("");
-    const [price, setPrice] = useState([10, 1000]);
+    const [price, setPrice] = useState([10, 25000]);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
 
-    const handlePrice = (e) => {
-        setPrice(e.target.value)
-    }
-    console.log(category);
-
-    const handleSearch = (e, newPrice) => {
+    const handlePrice = (newPrice) => {
         setPrice(newPrice);
     }
+    const count = filteredProductsCount;
+    // console.log(products);
 
-    console.log(price)
+    const handleSearch = (e) => {
+        e.preventDefault();
+        setSearch(e.target.value);
+
+    }
+    const clearFilter = () => {
+        setPrice([0, 25000]);
+        setCategory('');
+
+    }
+
     useEffect(() => {
         if (error) {
             dispatch(clearErrors());
@@ -56,14 +66,20 @@ const Products = () => {
         dispatch(getProduct(currentPage, price, category));
     }, [dispatch, currentPage, price, category, error]);
 
-    // console.log(products);
+
+    // console.log(keyword)
+    const filterProduct = products?.filter((product) =>
+        product.name.toLowerCase().includes(search.toLowerCase())
+    )
 
 
-    const clearFilter = () => {
-        setPrice([0, 200]);
-        setCategory('');
-        setSearch("");
+    const setCurrentPageNo = (e) => {
+        setCurrentPage(e)
+        console.log(e);
     }
+
+
+
     return (
         <Fragment>
             {
@@ -82,11 +98,13 @@ const Products = () => {
                                     <div className='py-10 border-b-2 border-accent'>
                                         <p className='text-neutral text-2xl font-bold px-2 lg:px-12'> Search Product </p>
                                         <div className='px-5 pt-10'>
-                                            <input type="text"
-                                                placeholder='Search Product'
-                                                className='w-full h-12 border-2 px-5 rounded-2xl outline-none'
+                                            <input
+                                                type="text"
+                                                placeholder='Search your product'
+                                                className='w-full border-2 p-4 rounded-xl border-gray-500'
                                                 onChange={handleSearch}
                                                 value={search}
+
                                             />
                                         </div>
                                     </div>
@@ -122,12 +140,32 @@ const Products = () => {
                                     </div>
                                     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 px-12 pt-12'>
                                         {
-                                            products &&
-                                            products?.map((bird) => (
+                                            filterProduct &&
+                                            filterProduct?.map((bird) => (
                                                 <BirdCard key={bird._id} bird={bird} />
                                             ))
                                         }
                                     </div>
+                                    {
+                                        resultPerPage < count && (
+                                            <div className="paginationBox">
+                                                <Pagination
+                                                    activePage={currentPage}
+                                                    itemsCountPerPage={resultPerPage}
+                                                    totalItemsCount={productsCount}
+                                                    onChange={setCurrentPageNo}
+                                                    nextPageText="Next"
+                                                    prevPageText="Prev"
+                                                    firstPageText="First"
+                                                    lastPageText="Last"
+                                                    itemClass='page-item'
+                                                    linkClass='page-link'
+                                                    activeClass='pageItemActive'
+                                                    activeLinkClass='pageLinkActive'
+                                                />
+                                            </div>
+                                        )
+                                    }
                                 </div>
                             </div>
                         </Fragment>

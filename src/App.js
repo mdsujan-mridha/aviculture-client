@@ -7,7 +7,7 @@ import Navbar from './component/Home/Navbar';
 import Footer from './component/Layout/Footer';
 import Login from './component/User/Login';
 import Register from './component/User/Register';
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import Profile from './component/User/Profile';
@@ -15,7 +15,7 @@ import Products from './component/products/Products';
 import ProtectedRoute from './component/route/ProtectedRoute';
 import { useSelector } from 'react-redux';
 import store from './store';
-import { loadUser } from './component/Action/userAction';
+import { clearErrors, loadUser } from './component/Action/userAction';
 import ProductsDetails from './component/products/ProductsDetails';
 import About from './component/About/About';
 import Contact from './component/Contact/Contact';
@@ -35,6 +35,9 @@ import OrderDetails from './component/Order/OrderDetails';
 import NewProduct from './component/Admin/NewProduct';
 import OrderList from './component/Admin/OrderList';
 import UpdateOrder from './component/Admin/UpdateOrder';
+import UserList from './component/Admin/UserList';
+import UpdateUser from './component/Admin/UpdateUser';
+
 function App() {
 
   axios.defaults.withCredentials = true;
@@ -48,8 +51,13 @@ function App() {
     // console.log(data);
   }
   useEffect(() => {
-    store.dispatch(loadUser());
-    getStripeApiKey();
+    try {
+      store.dispatch(loadUser());
+      getStripeApiKey();
+    } catch (error) {
+      toast.error(error);
+      store.dispatch(clearErrors())
+    }
 
   }, [])
 
@@ -134,6 +142,36 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+
+        {/* user list  */}
+        <Route
+          path="/admin/users"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <UserList />
+            </ProtectedRoute>
+          }
+        ></Route>
+
+        {/* update user  */}
+
+        <Route
+          path="/admin/user/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <UpdateUser />
+            </ProtectedRoute>
+          }
+        ></Route>
+
         {/* protected route --user */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
 

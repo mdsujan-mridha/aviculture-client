@@ -2,7 +2,7 @@ import { cartReducer } from "./component/reducer/cartReducer";
 import { allOrdersReducer, myOrdersReducer, newOrderReducer, orderDetailsReducer, orderReducer } from "./component/reducer/orderReducer";
 import { newPostReducer, postDetails, postReducer, updatePostReducer } from "./component/reducer/postReducer";
 import { newProductReducer, productDetailsReducer, productReducer, productsReducer } from "./component/reducer/productReducer";
-import { userReducer } from "./component/reducer/userReducer";
+import { allUserReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer } from "./component/reducer/userReducer";
 import { legacy_createStore as createStore } from "redux";
 const { combineReducers, applyMiddleware } = require("redux");
 const { composeWithDevTools } = require("redux-devtools-extension");
@@ -16,8 +16,8 @@ const reducer = combineReducers({
     productDetails: productDetailsReducer,
     // user reducer 
     user: userReducer,
-    // profile: profileReducer,
-    // forgotPassword: forgotPasswordReducer,
+    profile: profileReducer,
+    forgotPassword: forgotPasswordReducer,
     cart: cartReducer,
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
@@ -32,8 +32,8 @@ const reducer = combineReducers({
     order: orderReducer,
     // productReviews: productReviewReducer,
     // review: reviewReducer,
-    // allUsers: allUserReducer,
-    // userDetails: userDetailsReducer,
+    allUsers: allUserReducer,
+    userDetails: userDetailsReducer,
     posts: postReducer,
     postDetails: postDetails,
     post: updatePostReducer,

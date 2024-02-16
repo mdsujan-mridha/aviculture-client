@@ -14,6 +14,10 @@ const OrderDetails = () => {
     const { id } = useParams();
     const { order, error, loading } = useSelector((state) => state.orderDetails);
     const dispatch = useDispatch();
+    // const {user} = useSelector((state => state.user))
+
+    console.log(order);
+
 
     useEffect(() => {
         if (error) {
@@ -41,12 +45,12 @@ const OrderDetails = () => {
                             <div className="orderDetailsContainerBox">
                                 <div>
                                     <p>Name:</p>
-                                    <span>{order.user && order.user.name}</span>
+                                    <span>{order?.user && order?.user?.name}</span>
                                 </div>
                                 <div>
                                     <p>Phone:</p>
                                     <span>
-                                        {order.shippingInfo && order.shippingInfo.phoneNo}
+                                        {order?.shippingInfo && order.shippingInfo.phoneNo}
                                     </span>
                                 </div>
                                 <div>
