@@ -1,39 +1,38 @@
+
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { clearErrors, createProduct } from '../Action/productAction';
-import { NEW_PRODUCT_RESET } from '../constant/productConstant';
-import Sidebar from './Sidebar';
-import { AccountTree, AttachMoney, Description, Spellcheck, Storage } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { clearErrors, createPost } from '../Action/postAction';
+import { NEW_POST_RESET } from '../constant/postConstant';
 import MetaData from '../Layout/MetaData';
-import "./NewProduct.css";
+import Sidebar from './Sidebar';
+import { AccountTree, Description, Spellcheck } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
-const NewProduct = () => {
+const NewBlogPost = () => {
+
     const dispatch = useDispatch();
-
-    const { error, loading, success } = useSelector((state) => state.newProduct);
+    const { error, loading, success } = useSelector((state) => state.newPost);
     const navigate = useNavigate()
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState(0);
+    const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
-    const [Stock, setStock] = useState(0);
+    const [metaDescription, setMetaDescription] = useState("")
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
-    // console.log(success);
+    
     // set category 
-    const categories = [
-        "Ornithology",
-        "Birdwatching",
-        "Techniques",
-        "Nectar",
-        "Live Insects",
-        "Grit",
-        "Suet"
-    ];
 
+    const categories = [
+        "Laptop",
+        "Footwear",
+        "Bottom",
+        "Tops",
+        "Attire",
+        "Camera",
+        "SmartPhones",
+    ];
     useEffect(() => {
         if (error) {
             toast.error(error)
@@ -44,27 +43,24 @@ const NewProduct = () => {
         if (success) {
             toast.success("Product create successfully")
             navigate("/admin/dashboard")
-            dispatch({ type: NEW_PRODUCT_RESET })
+            dispatch({ type: NEW_POST_RESET })
         }
     }, [dispatch, error, success, navigate])
 
     const createProductSubmitHandler = (e) => {
-        e.preventDefault();
-        
+        e.preventDefault()
+
         const productData = {
-            name,
-            price,
+            title,
+            metaDescription,
             description,
             category,
-            Stock,
             images
+            
         };
-    
-        console.log(productData);
-        dispatch(createProduct(productData));
+        dispatch(createPost(productData));
     }
-    
-    
+
     const createProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
 
@@ -85,11 +81,9 @@ const NewProduct = () => {
         });
     }
 
-
-
     return (
         <Fragment>
-            <MetaData title="Create Product" />
+            <MetaData title="Create Post" />
             <div className="dashboard">
                 <Sidebar />
                 <div className="newProductContainer">
@@ -98,35 +92,38 @@ const NewProduct = () => {
                         encType="multipart/form-data"
                         onSubmit={createProductSubmitHandler}
                     >
-                        <h1>Create Product</h1>
+                        <h1>Create post</h1>
 
                         <div>
                             <Spellcheck />
                             <input
                                 type="text"
-                                placeholder="Product Name"
+                                placeholder="Post Name"
                                 required
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                             />
                         </div>
-                        <div>
-                            <AttachMoney />
-                            <input
-                                type="number"
-                                placeholder="Price"
-                                required
-                                onChange={(e) => setPrice(e.target.value)}
-                            />
-                        </div>
+
 
                         <div>
                             <Description />
 
                             <textarea
-                                placeholder="Product Description"
+                                placeholder="Post Description"
                                 value={description}
                                 onChange={(e) => setDescription(e.target.value)}
+                                cols="30"
+                                rows="1"
+                            ></textarea>
+                        </div>
+                        <div>
+                            <Description />
+
+                            <textarea
+                                placeholder="Post Description"
+                                value={metaDescription}
+                                onChange={(e) => setMetaDescription(e.target.value)}
                                 cols="30"
                                 rows="1"
                             ></textarea>
@@ -144,15 +141,7 @@ const NewProduct = () => {
                             </select>
                         </div>
 
-                        <div>
-                            <Storage />
-                            <input
-                                type="number"
-                                placeholder="Stock"
-                                required
-                                onChange={(e) => setStock(e.target.value)}
-                            />
-                        </div>
+
 
                         <div id="createProductFormFile">
                             <input
@@ -184,4 +173,4 @@ const NewProduct = () => {
     );
 };
 
-export default NewProduct;
+export default NewBlogPost;

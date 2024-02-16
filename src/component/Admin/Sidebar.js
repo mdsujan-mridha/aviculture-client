@@ -44,10 +44,10 @@ const Sidebar = () => {
                         </Link>
                     </TreeItem>
                     <TreeItem nodeId="15" label="Blog">
-                        <Link to="/admin/post/new">
+                        <Link to="/admin/blog/new">
                             <TreeItem nodeId="13" label="Add Blog" icon={<Add />} />
                         </Link>
-                        <Link to="/admin/post">
+                        <Link to="/admin/blogs">
                             <TreeItem nodeId="16" label="All Blog" icon={<PostAdd />} />
                         </Link>
                     </TreeItem>

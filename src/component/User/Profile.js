@@ -14,6 +14,7 @@ const Profile = () => {
 
     const { user, loading, isAuthenticated, error } = useSelector((state) => state.user);
 
+    //  console.log(user.avatar.url);
 
 
 
@@ -49,8 +50,9 @@ const Profile = () => {
                                 <div className="w-full h-full  pb-5 lg:pb-10  backdrop-blur-md " style={{ minHeight: '90vh', zIndex: 999 }}>
                                     <div className=' flex flex-col lg:flex-row justify-evenly items-center px-12 gap-5 pt-5 lg:pt-20'>
                                         <div className='flex flex-col gap-10 justify-center items-center'>
-                                            <img src={userImg} alt="user" className='w-72 h-72 rounded-full' />
-                                            <button className='btn text-lg font-semibold bg-teal-500 border-0 text-white'><Edit /> update profile </button>
+                                            <img src={user?.avatar ? user?.avatar?.url : userImg} alt="user" className='w-72 h-72 rounded-full' />
+                                            <Link to="/update/me" className='btn text-lg font-semibold bg-teal-500 border-0 text-white'><Edit /> update profile </Link>
+                                            <Link to="/seller/dashboard" className='btn text-lg font-semibold bg-teal-500 border-0 text-white'><Edit /> seller Dashboard </Link>
                                         </div>
                                         <div className='flex flex-col gap-6 justify-center items-center'>
                                             <h1 className='text-4xl font-bold text-white'>  Name </h1>
@@ -60,7 +62,7 @@ const Profile = () => {
                                             <h1 className='text-4xl font-bold text-white'> Join At </h1>
                                             <p className='text-lg font-bold text-gray-400'> {user?.createAt} </p>
                                             <div className='flex flex-col gap-5 mt-10 '>
-                                                <button className='btn text-lg font-semibold bg-teal-400 border-0 text-white'><ChangeCircle /> Change password </button>
+                                                <Link to="/update/password" className='btn text-lg font-semibold bg-teal-400 border-0 text-white'><ChangeCircle /> Change password </Link>
                                                 <Link to="/orders" className='btn text-lg font-semibold bg-teal-400 border-0 text-white'><ListAlt /> Orders </Link>
                                             </div>
                                         </div>

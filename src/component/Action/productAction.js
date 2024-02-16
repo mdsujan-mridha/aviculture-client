@@ -28,7 +28,10 @@ import {
     ALL_REVIEW_SUCCESS,
     DELETE_REVIEW_REQUEST,
     DELETE_REVIEW_SUCCESS,
-    DELETE_REVIEW_FAIL
+    DELETE_REVIEW_FAIL,
+    MY_PRODUCT_REQUEST,
+    MY_PRODUCT_SUCCESS,
+    MY_PRODUCT_FAIL
 } from "../constant/productConstant";
 
 
@@ -153,7 +156,10 @@ export const createProduct = (productData) => async (dispatch) => {
         //         "Content-type":"application/json"
         //     }
         //   }
-        const data = await axios.post(`http://localhost:5000/api/v1/admin/product/new`, productData)
+        const data = await axios.post(`http://localhost:5000/api/v1/product/new`, productData)
+         
+        console.log(productData)
+
         dispatch({
             type: NEW_PRODUCT_SUCCESS,
             payload: data
@@ -218,6 +224,24 @@ export const deleteReviews = (reviewId, productId) => async (dispatch) => {
         });
     }
 };
+
+// my product 
+export const myProducts = () => async (dispatch) => {
+    try {
+
+        dispatch({ type: MY_PRODUCT_REQUEST })
+        const { data } = await axios.get(`http://localhost:5000/api/v1/products/me`);
+        dispatch({
+            type: MY_PRODUCT_SUCCESS,
+            payload: data.products
+        })
+    } catch (error) {
+        dispatch({
+            type: MY_PRODUCT_FAIL,
+            payload: error.response.data.message,
+        })
+    }
+}
 
 // clear error 
 export const clearErrors = () => async (dispatch) => {

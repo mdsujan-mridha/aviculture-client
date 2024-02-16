@@ -1,19 +1,22 @@
+
+
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { clearErrors, getProductDetails, updateProduct } from '../Action/productAction';
 import { toast } from 'react-toastify';
-import { clearErrors, createProduct } from '../Action/productAction';
-import { NEW_PRODUCT_RESET } from '../constant/productConstant';
+import { UPDATE_ORDER_RESET } from '../constant/orderConstant';
 import Sidebar from './Sidebar';
+import MetaData from '../Layout/MetaData';
 import { AccountTree, AttachMoney, Description, Spellcheck, Storage } from '@mui/icons-material';
 import { Button } from '@mui/material';
-import MetaData from '../Layout/MetaData';
-import "./NewProduct.css";
 
-const NewProduct = () => {
+const UpdateProduct = () => {
+
+    const { id } = useParams();
     const dispatch = useDispatch();
-
-    const { error, loading, success } = useSelector((state) => state.newProduct);
+    const { error, product } = useSelector((state) => state.productDetails);
+    const { loading, error: updateError, isUpdate } = useSelector((state) => state.product);
     const navigate = useNavigate()
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
@@ -21,36 +24,42 @@ const NewProduct = () => {
     const [category, setCategory] = useState("");
     const [Stock, setStock] = useState(0);
     const [images, setImages] = useState([]);
+    const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
-    // console.log(success);
-    // set category 
-    const categories = [
-        "Ornithology",
-        "Birdwatching",
-        "Techniques",
-        "Nectar",
-        "Live Insects",
-        "Grit",
-        "Suet"
-    ];
+
+    const productId = id;
 
     useEffect(() => {
+
+        if (product && product?._id !== productId) {
+            dispatch(getProductDetails(productId))
+        } else {
+            setName(product.name);
+            setDescription(product.description);
+            setPrice(product.price);
+            setCategory(product.category);
+            setStock(product.Stock);
+            setOldImages(product.images);
+        }
         if (error) {
             toast.error(error)
-            console.log(error)
             dispatch(clearErrors());
-
         }
-        if (success) {
-            toast.success("Product create successfully")
+        if (updateError) {
+            toast.error(updateError);
+            dispatch(clearErrors());
+        }
+        if (isUpdate) {
+            toast.success("Update product successful");
             navigate("/admin/dashboard")
-            dispatch({ type: NEW_PRODUCT_RESET })
+            dispatch({ type: UPDATE_ORDER_RESET });
         }
-    }, [dispatch, error, success, navigate])
 
-    const createProductSubmitHandler = (e) => {
+    }, [product, error, updateError, dispatch, isUpdate, navigate, productId])
+    // update product handler 
+    const updateProductHandlerSubmit = (e) => {
         e.preventDefault();
-        
+        // const myForm = new FormData();
         const productData = {
             name,
             price,
@@ -59,17 +68,16 @@ const NewProduct = () => {
             Stock,
             images
         };
-    
-        console.log(productData);
-        dispatch(createProduct(productData));
+
+        dispatch(updateProduct(productId, productData));
+
     }
-    
-    
-    const createProductImagesChange = (e) => {
+    const updateProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
 
         setImages([]);
         setImagesPreview([]);
+        setOldImages([]);
 
         files.forEach((file) => {
             const reader = new FileReader();
@@ -83,9 +91,17 @@ const NewProduct = () => {
 
             reader.readAsDataURL(file);
         });
-    }
+    };
 
-
+    const categories = [
+        "Laptop",
+        "Footwear",
+        "Bottom",
+        "Tops",
+        "Attire",
+        "Camera",
+        "SmartPhones",
+    ];
 
     return (
         <Fragment>
@@ -96,7 +112,7 @@ const NewProduct = () => {
                     <form
                         className="createProductForm"
                         encType="multipart/form-data"
-                        onSubmit={createProductSubmitHandler}
+                        onSubmit={updateProductHandlerSubmit}
                     >
                         <h1>Create Product</h1>
 
@@ -117,6 +133,7 @@ const NewProduct = () => {
                                 placeholder="Price"
                                 required
                                 onChange={(e) => setPrice(e.target.value)}
+                                value={price}
                             />
                         </div>
 
@@ -134,7 +151,10 @@ const NewProduct = () => {
 
                         <div>
                             <AccountTree />
-                            <select onChange={(e) => setCategory(e.target.value)}>
+                            <select
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
                                 <option value="">Choose Category</option>
                                 {categories.map((cate) => (
                                     <option key={cate} value={cate}>
@@ -151,6 +171,7 @@ const NewProduct = () => {
                                 placeholder="Stock"
                                 required
                                 onChange={(e) => setStock(e.target.value)}
+                                value={Stock}
                             />
                         </div>
 
@@ -159,9 +180,16 @@ const NewProduct = () => {
                                 type="file"
                                 name="avatar"
                                 accept="image/*"
-                                onChange={createProductImagesChange}
+                                onChange={updateProductImagesChange}
                                 multiple
                             />
+                        </div>
+
+                        <div id="createProductFormImage">
+                            {oldImages &&
+                                oldImages.map((image, index) => (
+                                    <img key={index} src={image.url} alt="Old Product Preview" />
+                                ))}
                         </div>
 
                         <div id="createProductFormImage">
@@ -169,7 +197,6 @@ const NewProduct = () => {
                                 <img key={index} src={image} alt="Product Preview" />
                             ))}
                         </div>
-
                         <Button
                             id="createProductBtn"
                             type="submit"
@@ -184,4 +211,4 @@ const NewProduct = () => {
     );
 };
 
-export default NewProduct;
+export default UpdateProduct;

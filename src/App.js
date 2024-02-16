@@ -37,6 +37,16 @@ import OrderList from './component/Admin/OrderList';
 import UpdateOrder from './component/Admin/UpdateOrder';
 import UserList from './component/Admin/UserList';
 import UpdateUser from './component/Admin/UpdateUser';
+import Accessories from './component/products/Accessories';
+import SellerDashboard from './component/SellerDashboard/SellerDashboard';
+import SellerAddNewPost from './component/SellerDashboard/SellerAddNewPost';
+import SellerProductList from './component/SellerDashboard/SellerProductList';
+import UpdateProduct from './component/Admin/UpdateProduct';
+import BlogList from './component/Admin/BlogList';
+import UpdateBlog from './component/Admin/UpdateBlog';
+import NewBlogPost from './component/Admin/NewBlogPost';
+import UpdateProdile from './component/User/UpdateProdile';
+import UpdatePassword from './component/User/UpdatePassword';
 
 function App() {
 
@@ -73,6 +83,7 @@ function App() {
         <Route path='/login' element={<Login />}></Route>
         <Route path='/register' element={<Register />}></Route>
         <Route path='/products' element={<Products />}></Route>
+        <Route path='/accessories' element={<Accessories />}></Route>
         <Route path='/products/:id' element={<ProductsDetails />}></Route>
         <Route path='/blogs' element={<Posts />}></Route>
         <Route path='/blogs/:id' element={<PostDetails />}></Route>
@@ -116,6 +127,21 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+
+        {/* update product  */}
+        <Route
+          path="/admin/product/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <UpdateProduct />
+            </ProtectedRoute>
+          }
+        ></Route>
+
         {/* order list  */}
         <Route
           path="/admin/orders"
@@ -172,6 +198,48 @@ function App() {
           }
         ></Route>
 
+        {/* blog list  */}
+        <Route
+          path="/admin/blogs"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <BlogList />
+            </ProtectedRoute>
+          }
+        ></Route>
+
+        {/* create blog  */}
+
+        <Route
+          path="/admin/blog/new"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <NewBlogPost />
+            </ProtectedRoute>
+          }
+        ></Route>
+        {/* update blog  */}
+        <Route
+          path="/admin/post/:id"
+          element={
+            <ProtectedRoute
+              isAuthenticated={isAuthenticated}
+              adminRoute={true}
+              isAdmin={user?.role === "admin" ? true : false}
+            >
+              <UpdateBlog />
+            </ProtectedRoute>
+          }
+        ></Route>
+
         {/* protected route --user */}
         <Route element={<ProtectedRoute isAuthenticated={isAuthenticated} />}>
 
@@ -179,6 +247,8 @@ function App() {
           <Route path='/shipping' element={<Shipping />}></Route>
           <Route path='/order/confirm' element={<ConfirmOrder />}></Route>
           <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/update/me' element={<UpdateProdile />}></Route>
+          <Route path='/update/password' element={<UpdatePassword />}></Route>
           <Route path='/orders' element={<MyOrder />}></Route>
           <Route path='/order/:id' element={<OrderDetails />}></Route>
           <Route>
@@ -196,6 +266,10 @@ function App() {
             )}
           </Route>
           <Route path='/success' element={<Success />}></Route>
+          <Route path='/seller/dashboard' element={<SellerDashboard />}></Route>
+          <Route path='/seller/product/new' element={<SellerAddNewPost />}></Route>
+          <Route path='/seller/product' element={<SellerProductList />}></Route>
+
         </Route>
 
         {/* admin route  */}
@@ -204,7 +278,7 @@ function App() {
       </Routes>
 
       <Footer />
-    </Fragment>
+    </Fragment >
   );
 }
 

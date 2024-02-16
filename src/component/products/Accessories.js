@@ -1,25 +1,23 @@
-import { Slider } from '@mui/material';
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
-import BirdCard from './BirdCard';
 import { clearErrors, getProduct } from '../Action/productAction';
 import { toast } from 'react-toastify';
-import Loader from '../Layout/Loader';
 import Pagination from 'react-js-pagination';
-import "./products.css";
-
+import BirdCard from './BirdCard';
+import { Slider } from '@mui/material';
+import Loader from '../Layout/Loader';
 
 const categories = [
-    "Ornithology",
-    "Birdwatching",
-    "Techniques",
-    "Nectar",
-    "Live Insects",
-    "Grit",
-    "Suet"
+    "Bird Cage",
+    "Bird Perch",
+    " Bird Feeder",
+    "Bird Toy",
+    "Bird Bath",
+    "Bird Swing",
+    "Bird Food"
 ]
-const Products = () => {
+
+const Accessories = () => {
 
     const dispatch = useDispatch();
     const {
@@ -33,7 +31,7 @@ const Products = () => {
 
 
     // state for category 
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState("Bird-Nesting");
     const [price, setPrice] = useState([10, 25000]);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -51,7 +49,7 @@ const Products = () => {
     }
     const clearFilter = () => {
         setPrice([0, 25000]);
-        setCategory('');
+        setCategory("Bird-Nesting");
 
     }
 
@@ -73,8 +71,9 @@ const Products = () => {
 
     const setCurrentPageNo = (e) => {
         setCurrentPage(e)
-        
+
     }
+
     return (
         <Fragment>
             {
@@ -170,4 +169,4 @@ const Products = () => {
     );
 };
 
-export default Products;
+export default Accessories;

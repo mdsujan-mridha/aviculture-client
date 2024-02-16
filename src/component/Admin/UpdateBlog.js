@@ -1,75 +1,87 @@
+
+
 import React, { Fragment, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { clearErrors, getPostDetails, updatePost } from '../Action/postAction';
 import { toast } from 'react-toastify';
-import { clearErrors, createProduct } from '../Action/productAction';
-import { NEW_PRODUCT_RESET } from '../constant/productConstant';
-import Sidebar from './Sidebar';
-import { AccountTree, AttachMoney, Description, Spellcheck, Storage } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { UPDATE_POST_RESET } from '../constant/postConstant';
 import MetaData from '../Layout/MetaData';
-import "./NewProduct.css";
+import Sidebar from './Sidebar';
+import { AccountTree, Description, Spellcheck } from '@mui/icons-material';
+import { Button } from '@mui/material';
 
-const NewProduct = () => {
+const UpdateBlog = () => {
+
+
+    const { id } = useParams();
     const dispatch = useDispatch();
-
-    const { error, loading, success } = useSelector((state) => state.newProduct);
+    // const { error, post } = useSelector((state) => state.productDetails);
+    const { loading, error: updateError, isUpdate } = useSelector((state) => state.post);
+    const [post, setPost] = useState({})
     const navigate = useNavigate()
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState(0);
+    const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
-    const [Stock, setStock] = useState(0);
     const [images, setImages] = useState([]);
+    const [oldImages, setOldImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
-    // console.log(success);
-    // set category 
-    const categories = [
-        "Ornithology",
-        "Birdwatching",
-        "Techniques",
-        "Nectar",
-        "Live Insects",
-        "Grit",
-        "Suet"
-    ];
+
+    const productId = id;
 
     useEffect(() => {
-        if (error) {
-            toast.error(error)
-            console.log(error)
+
+        fetch(`http://localhost:5000/api/v1/post/${id}`)
+            .then(res => res.json())
+            .then(data => setPost(data.post))
+
+    }, [id])
+    useEffect(() => {
+
+        if (post && post?._id !== productId) {
+            dispatch(getPostDetails(productId))
+        } else {
+            setTitle(post?.title);
+            setDescription(post?.description);
+            setCategory(post?.category);
+            setOldImages(post?.images);
+        }
+        // if (error) {
+        //     toast.error(error)
+        //     dispatch(clearErrors());
+        // }
+        if (updateError) {
+            toast.error(updateError);
             dispatch(clearErrors());
-
         }
-        if (success) {
-            toast.success("Product create successfully")
+        if (isUpdate) {
+            toast.success("Update product successful");
             navigate("/admin/dashboard")
-            dispatch({ type: NEW_PRODUCT_RESET })
+            dispatch({ type: UPDATE_POST_RESET });
         }
-    }, [dispatch, error, success, navigate])
 
-    const createProductSubmitHandler = (e) => {
+    }, [post, updateError, dispatch, isUpdate, navigate, productId])
+    // update product handler 
+    const updateProductHandlerSubmit = (e) => {
         e.preventDefault();
-        
+
         const productData = {
-            name,
-            price,
+            title,
             description,
             category,
-            Stock,
             images
         };
-    
         console.log(productData);
-        dispatch(createProduct(productData));
+
+        dispatch(updatePost(productId, productData));
+
     }
-    
-    
-    const createProductImagesChange = (e) => {
+    const updateProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
 
         setImages([]);
         setImagesPreview([]);
+        setOldImages([]);
 
         files.forEach((file) => {
             const reader = new FileReader();
@@ -83,9 +95,17 @@ const NewProduct = () => {
 
             reader.readAsDataURL(file);
         });
-    }
+    };
 
-
+    const categories = [
+        "Laptop",
+        "Footwear",
+        "Bottom",
+        "Tops",
+        "Attire",
+        "Camera",
+        "SmartPhones",
+    ];
 
     return (
         <Fragment>
@@ -96,30 +116,19 @@ const NewProduct = () => {
                     <form
                         className="createProductForm"
                         encType="multipart/form-data"
-                        onSubmit={createProductSubmitHandler}
+                        onSubmit={updateProductHandlerSubmit}
                     >
-                        <h1>Create Product</h1>
-
+                        <h1>Update post</h1>
                         <div>
                             <Spellcheck />
                             <input
                                 type="text"
                                 placeholder="Product Name"
                                 required
-                                value={name}
-                                onChange={(e) => setName(e.target.value)}
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
                             />
                         </div>
-                        <div>
-                            <AttachMoney />
-                            <input
-                                type="number"
-                                placeholder="Price"
-                                required
-                                onChange={(e) => setPrice(e.target.value)}
-                            />
-                        </div>
-
                         <div>
                             <Description />
 
@@ -134,7 +143,10 @@ const NewProduct = () => {
 
                         <div>
                             <AccountTree />
-                            <select onChange={(e) => setCategory(e.target.value)}>
+                            <select
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
                                 <option value="">Choose Category</option>
                                 {categories.map((cate) => (
                                     <option key={cate} value={cate}>
@@ -144,24 +156,23 @@ const NewProduct = () => {
                             </select>
                         </div>
 
-                        <div>
-                            <Storage />
-                            <input
-                                type="number"
-                                placeholder="Stock"
-                                required
-                                onChange={(e) => setStock(e.target.value)}
-                            />
-                        </div>
+
 
                         <div id="createProductFormFile">
                             <input
                                 type="file"
                                 name="avatar"
                                 accept="image/*"
-                                onChange={createProductImagesChange}
+                                onChange={updateProductImagesChange}
                                 multiple
                             />
+                        </div>
+
+                        <div id="createProductFormImage">
+                            {oldImages &&
+                                oldImages.map((image, index) => (
+                                    <img key={index} src={image.url} alt="Old Product Preview" />
+                                ))}
                         </div>
 
                         <div id="createProductFormImage">
@@ -184,4 +195,4 @@ const NewProduct = () => {
     );
 };
 
-export default NewProduct;
+export default UpdateBlog;

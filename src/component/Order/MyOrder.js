@@ -64,7 +64,7 @@ const MyOrder = () => {
     const rows = [];
     orders &&
         orders.forEach((item, index) => {
-            console.log(item);
+            // console.log(item);
             rows.push({
                 itemsQty: item.orderItems.length,
                 id: item._id,
@@ -82,7 +82,7 @@ const MyOrder = () => {
         dispatch(myOrders());
     }, [dispatch, error])
 
-    console.log(orders);
+    // console.log(orders);
     
 
     return (

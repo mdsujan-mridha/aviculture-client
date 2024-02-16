@@ -1,11 +1,11 @@
-import React, { Fragment, useEffect, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import registerBgImage from "../images/login & Register/register.jpg";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearErrors, register } from '../Action/userAction';
 import { toast } from 'react-toastify';
 import Loader from '../Layout/Loader';
-
+import profileImage from "../images/user.jpg";
 
 
 const Register = () => {
@@ -16,6 +16,14 @@ const Register = () => {
     const emailRef = useRef();
     const passwordRef = useRef();
     const location = useLocation();
+    const [avatar, setAvatar] = useState(profileImage);
+    const [avatarPreview, setAvatarPreview] = useState(profileImage);
+    const [user, setUser] = useState({
+        name: "",
+        email: "",
+        password: ""
+    });
+    const { name, email, password } = user;
 
     const registerHandler = (e) => {
         e.preventDefault();
@@ -26,9 +34,29 @@ const Register = () => {
         myForm.set("name", name);
         myForm.set("email", email);
         myForm.set("password", password);
+        myForm.set("avatar", avatar);
         console.log(myForm);
         dispatch(register(myForm))
     }
+
+    // image 
+    const registerDataChange = (e) => {
+        if (e.target.name === "avatar") {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setAvatarPreview(reader.result);
+                    setAvatar(reader.result);
+                }
+            };
+            reader.readAsDataURL(e.target.files[[0]]);
+        } else {
+            setUser({ ...user, [e.target.name]: e.target.value });
+        }
+
+    };
+
     //  redirect user 
     const redirect = location.search ? location.search.split("=")[1] : "/profile";
     useEffect(() => {
@@ -40,7 +68,7 @@ const Register = () => {
             toast.success("Register successfully");
             navigate(redirect);
         }
-    }, [error, dispatch, isAuthenticated, navigate,redirect]);
+    }, [error, dispatch, isAuthenticated, navigate, redirect]);
     return (
         <Fragment>
             {
@@ -89,6 +117,16 @@ const Register = () => {
                                             placeholder='Enter your password'
 
                                         />
+                                        <div id="registerImage" className='w-56 h-34'>
+                                            <img src={avatarPreview} alt="Avatar Preview" />
+                                            <input
+                                                type="file"
+                                                name="avatar"
+                                                accept="image/*"
+                                                onChange={registerDataChange}
+                                            />
+                                        </div>
+
                                         <input type="submit" value="Register" className=' text-white font-bold text-lg w-full bg-gray-600' style={{ outline: 'none', border: 'none', height: '45px', borderRadius: 8, cursor: 'pointer' }} />
                                     </form>
                                     <div className='flex flex-col lg:flex-row lg:justify-between items-center pt-10 text-lg font-bold text-white'>

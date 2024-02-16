@@ -1,16 +1,22 @@
+
+
 import React, { Fragment, useEffect, useState } from 'react';
+
+import "./SellerAddNewPost.css";
+import MetaData from '../Layout/MetaData';
+import SellerSidebard from './SellerSidebard';
+import { AccountTree, AttachMoney, Description, Spellcheck, Storage } from '@mui/icons-material';
+import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { clearErrors, createProduct } from '../Action/productAction';
+import { clearErrors } from '../Action/userAction';
 import { NEW_PRODUCT_RESET } from '../constant/productConstant';
-import Sidebar from './Sidebar';
-import { AccountTree, AttachMoney, Description, Spellcheck, Storage } from '@mui/icons-material';
-import { Button } from '@mui/material';
-import MetaData from '../Layout/MetaData';
-import "./NewProduct.css";
+import { createProduct } from '../Action/productAction';
 
-const NewProduct = () => {
+
+const SellerAddNewPost = () => {
+
     const dispatch = useDispatch();
 
     const { error, loading, success } = useSelector((state) => state.newProduct);
@@ -22,7 +28,7 @@ const NewProduct = () => {
     const [Stock, setStock] = useState(0);
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
-    // console.log(success);
+
     // set category 
     const categories = [
         "Ornithology",
@@ -31,7 +37,8 @@ const NewProduct = () => {
         "Nectar",
         "Live Insects",
         "Grit",
-        "Suet"
+        "Suet",
+        "Pet Supplies"
     ];
 
     useEffect(() => {
@@ -50,7 +57,6 @@ const NewProduct = () => {
 
     const createProductSubmitHandler = (e) => {
         e.preventDefault();
-        
         const productData = {
             name,
             price,
@@ -59,15 +65,12 @@ const NewProduct = () => {
             Stock,
             images
         };
-    
         console.log(productData);
         dispatch(createProduct(productData));
     }
-    
-    
+
     const createProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
-
         setImages([]);
         setImagesPreview([]);
 
@@ -86,12 +89,11 @@ const NewProduct = () => {
     }
 
 
-
     return (
         <Fragment>
             <MetaData title="Create Product" />
             <div className="dashboard">
-                <Sidebar />
+                <SellerSidebard />
                 <div className="newProductContainer">
                     <form
                         className="createProductForm"
@@ -184,4 +186,4 @@ const NewProduct = () => {
     );
 };
 
-export default NewProduct;
+export default SellerAddNewPost;

@@ -15,7 +15,7 @@ const BirdCard = ({ bird }) => {
                         <p className='text-2xl font-bold text-neutral'> {bird?.name} </p>
                         <p className='font-bold text-neutral'>Price: <del className='text-gray-500'> 200 </del>{bird?.price} </p>
                     </div>
-                    <p className='text-md font-bold text-white'> {bird.description} </p>
+                    
                 </div>
             </Link>
         </Fragment>
