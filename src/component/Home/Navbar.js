@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { loadUser, logout } from '../Action/userAction';
+import {loadUser, logout } from '../Action/userAction';
 import store from "../../store";
 import { Dashboard, ListAlt, Logout, PersonOutline, ShoppingCart } from '@mui/icons-material';
 import { toast } from 'react-toastify';
@@ -17,6 +17,7 @@ const Navbar = () => {
     }
 
     useEffect(() => {
+
         store.dispatch(loadUser())
     }, [dispatch])
     // console.log(user);
