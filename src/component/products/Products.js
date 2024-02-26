@@ -11,13 +11,13 @@ import "./products.css";
 
 
 const categories = [
-    "Ornithology",
-    "Birdwatching",
-    "Techniques",
-    "Nectar",
-    "Live Insects",
-    "Grit",
-    "Suet"
+    "Parrots",
+    "Birds of Prey ",
+    "Passerines",
+    "Game Bird",
+    "Sea Bird",
+    "Wading Bird",
+    "Columbidae",
 ]
 const Products = () => {
 
@@ -33,12 +33,12 @@ const Products = () => {
 
 
     // state for category 
-    const [category, setCategory] = useState("");
+    const [category, setCategory] = useState("Parrots");
     const [price, setPrice] = useState([10, 25000]);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
 
-    const handlePrice = (newPrice) => {
+    const handlePrice = (e,newPrice) => {
         setPrice(newPrice);
     }
     const count = filteredProduct;
@@ -49,12 +49,10 @@ const Products = () => {
         setSearch(e.target.value);
 
     }
-    const clearFilter = () => {
-        setPrice([0, 25000]);
-        setCategory('');
 
-    }
-
+    const setCurrentPageNo = (e) => {
+        setCurrentPage(e)
+    };
     useEffect(() => {
         if (error) {
             dispatch(clearErrors());
@@ -66,15 +64,16 @@ const Products = () => {
 
     console.log(filteredProduct);
     // console.log(keyword)
-    const filterProduct = products?.filter((product) =>
-        product.name.toLowerCase().includes(search.toLowerCase())
-    )
+  
 
+    const clearFilter = () => {
+        setPrice([0, 25000]);
+        setCategory('Parrots');
 
-    const setCurrentPageNo = (e) => {
-        setCurrentPage(e)
-        
     }
+    const filterProduct = products?.filter((product) =>
+    product.name.toLowerCase().includes(search.toLowerCase())
+)
     return (
         <Fragment>
             {
@@ -122,7 +121,7 @@ const Products = () => {
                                                 onChange={handlePrice}
                                                 valueLabelDisplay="auto"
                                                 aria-labelledby='range-slider'
-                                                min={0}
+                                                min={10}
                                                 max={25000}
 
                                             />

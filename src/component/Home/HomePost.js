@@ -8,7 +8,7 @@ import { clearErrors, getPost } from '../Action/postAction';
 import Loader from '../Layout/Loader';
 import { Link } from 'react-router-dom';
 import HomeBlogCard from './HomeBlogCard';
-
+import AOS from 'aos';
 const HomePost = () => {
 
     const dispatch = useDispatch();
@@ -30,7 +30,16 @@ const HomePost = () => {
     }, [dispatch, error])
 
     const homePost = posts?.slice(0, 4);
-    console.log(homePost);
+    // console.log(homePost);
+
+    // animation
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            delay: 100,
+        });
+    },
+        [])
 
     return (
         <Fragment>
@@ -39,12 +48,15 @@ const HomePost = () => {
                     (<Loader />)
                     :
                     (<Fragment>
-                        <div className='container py-10 mx-auto'>
+                        <div data-aos="fade-right"
+                            data-aos-offset="300"
+                            data-aos-easing="ease-in-sine" className='container py-10 mx-auto'>
                             <div className='flex justify-between items-center'>
                                 <h1 className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-500'>Popular Blog</h1>
                                 <Link to="/blogs" className='text-white'> View All </Link>
                             </div>
-                            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10'>
+                            <div data-aos="fade-up"
+                                data-aos-anchor-placement="top-bottom" className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10'>
                                 {
                                     homePost &&
                                     homePost?.map((blog) => (

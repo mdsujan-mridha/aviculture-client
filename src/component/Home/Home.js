@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Hero from './Hero';
 import HomeProduct from './HomeProduct';
 import RecentProduct from './RecentProduct';
@@ -7,10 +7,13 @@ import HomePost from './HomePost';
 
 
 const Home = () => {
+
+
+
     return (
         <Fragment>
             <Hero />
-            <HomeProduct />
+            < HomeProduct />
             <RecentProduct />
             <BestSell />
             <HomePost />

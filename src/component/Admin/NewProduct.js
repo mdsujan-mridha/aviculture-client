@@ -17,6 +17,7 @@ const NewProduct = () => {
     const navigate = useNavigate()
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
+    const [discount, setDiscount] = useState(0);
     const [description, setDescription] = useState("");
     const [category, setCategory] = useState("");
     const [Stock, setStock] = useState(0);
@@ -25,13 +26,20 @@ const NewProduct = () => {
     // console.log(success);
     // set category 
     const categories = [
-        "Ornithology",
-        "Birdwatching",
-        "Techniques",
-        "Nectar",
-        "Live Insects",
-        "Grit",
-        "Suet"
+        "Parrots",
+        "Birds of Prey ",
+        "Passerines",
+        "Game Bird",
+        "Sea Bird",
+        "Wading Bird",
+        "Columbidae",
+        "Bird Cage",
+        "Bird Perch",
+        " Bird Feeder",
+        "Bird Toy",
+        "Bird Bath",
+        "Bird Swing",
+        "Bird Food"
     ];
 
     useEffect(() => {
@@ -50,21 +58,22 @@ const NewProduct = () => {
 
     const createProductSubmitHandler = (e) => {
         e.preventDefault();
-        
+
         const productData = {
             name,
             price,
+            discount,
             description,
             category,
             Stock,
             images
         };
-    
+
         console.log(productData);
         dispatch(createProduct(productData));
     }
-    
-    
+
+
     const createProductImagesChange = (e) => {
         const files = Array.from(e.target.files);
 
@@ -117,6 +126,15 @@ const NewProduct = () => {
                                 placeholder="Price"
                                 required
                                 onChange={(e) => setPrice(e.target.value)}
+                            />
+                        </div>
+                        <div>
+                            <AttachMoney />
+                            <input
+                                type="number"
+                                placeholder="discount Price"
+                                required
+                                onChange={(e) => setDiscount(e.target.value)}
                             />
                         </div>
 

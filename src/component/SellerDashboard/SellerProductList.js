@@ -16,6 +16,7 @@ const SellerProductList = () => {
 
     const { user } = useSelector((state) => state.user);
 
+
     const columns = [
         { field: "id", headerName: "Product ID", minWidth: 200, flex: 0.5 },
         {

@@ -13,9 +13,9 @@ const BirdCard = ({ bird }) => {
                 <div className='mt-5 px-5'>
                     <div className="flex px-2 justify-between items-center pb-3 gap-2">
                         <p className='font-bold text-neutral'> {bird?.name} </p>
-                        <p className='text-neutral'>Price: <del className='text-gray-500'> 200 </del>{bird?.price} </p>
+                        <p className='text-neutral'>Price: <del className='text-gray-500'> {bird?.discount} </del>{bird?.price} </p>
                     </div>
-                    
+
                 </div>
             </Link>
         </Fragment>

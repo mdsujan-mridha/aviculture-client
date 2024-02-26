@@ -21,17 +21,24 @@ const NewBlogPost = () => {
     const [metaDescription, setMetaDescription] = useState("")
     const [images, setImages] = useState([]);
     const [imagesPreview, setImagesPreview] = useState([]);
-    
+
     // set category 
 
     const categories = [
-        "Laptop",
-        "Footwear",
-        "Bottom",
-        "Tops",
-        "Attire",
-        "Camera",
-        "SmartPhones",
+        "Parrots",
+        "Birds of Prey ",
+        "Passerines",
+        "Game Bird",
+        "Sea Bird",
+        "Wading Bird",
+        "Columbidae",
+        "Bird Cage",
+        "Bird Perch",
+        " Bird Feeder",
+        "Bird Toy",
+        "Bird Bath",
+        "Bird Swing",
+        "Bird Food"
     ];
     useEffect(() => {
         if (error) {
@@ -56,7 +63,7 @@ const NewBlogPost = () => {
             description,
             category,
             images
-            
+
         };
         dispatch(createPost(productData));
     }
@@ -104,7 +111,16 @@ const NewBlogPost = () => {
                                 onChange={(e) => setTitle(e.target.value)}
                             />
                         </div>
-
+                        <div>
+                            <Description />
+                            <textarea
+                                placeholder="Meta Description"
+                                value={metaDescription}
+                                onChange={(e) => setMetaDescription(e.target.value)}
+                                cols="30"
+                                rows="1"
+                            ></textarea>
+                        </div>
 
                         <div>
                             <Description />
@@ -117,17 +133,7 @@ const NewBlogPost = () => {
                                 rows="1"
                             ></textarea>
                         </div>
-                        <div>
-                            <Description />
 
-                            <textarea
-                                placeholder="Post Description"
-                                value={metaDescription}
-                                onChange={(e) => setMetaDescription(e.target.value)}
-                                cols="30"
-                                rows="1"
-                            ></textarea>
-                        </div>
 
                         <div>
                             <AccountTree />

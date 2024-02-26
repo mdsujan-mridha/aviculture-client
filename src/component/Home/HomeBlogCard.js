@@ -3,7 +3,7 @@ import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/m
 import { Link } from 'react-router-dom';
 
 const HomeBlogCard = ({ blog }) => {
-    console.log(blog);
+    // console.log(blog);
 
     return (
         <Fragment>

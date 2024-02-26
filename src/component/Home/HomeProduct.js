@@ -5,6 +5,7 @@ import { clearErrors, getProduct } from '../Action/productAction';
 import BirdCard from '../products/BirdCard';
 import Loader from '../Layout/Loader';
 import { Link } from 'react-router-dom';
+import AOS from 'aos';
 
 const HomeProduct = () => {
 
@@ -28,6 +29,16 @@ const HomeProduct = () => {
 
     }, [dispatch, error]);
 
+
+    // animation 
+    useEffect(() => {
+        AOS.init({
+            duration: 1000,
+            delay: 100,
+        });
+
+    }, [])
+
     const homeProducts = products?.slice(0, 4)
 
     return (
@@ -37,7 +48,8 @@ const HomeProduct = () => {
                     (<Loader />)
                     :
                     (<Fragment>
-                        <div className='container py-10 mx-auto'>
+                        <div data-aos="fade-up"
+                            data-aos-anchor-placement="center-center" className='container py-10 mx-auto'>
                             <div className='flex justify-between items-center'>
                                 <h1 className='text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-purple-500'>Popular Product</h1>
                                 <Link to="/products" className='text-white'> View All </Link>
