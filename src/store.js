@@ -1,7 +1,7 @@
 import { cartReducer } from "./component/reducer/cartReducer";
 import { allOrdersReducer, myOrdersReducer, newOrderReducer, orderDetailsReducer, orderReducer } from "./component/reducer/orderReducer";
 import { newPostReducer, postDetails, postReducer, updatePostReducer } from "./component/reducer/postReducer";
-import { myProductReducer, newProductReducer, productDetailsReducer, productReducer, productsReducer } from "./component/reducer/productReducer";
+import { myProductReducer, newProductReducer, newReviewReducer, productDetailsReducer, productReducer, productReviewReducer, productsReducer, reviewReducer } from "./component/reducer/productReducer";
 import { allUserReducer, forgotPasswordReducer, profileReducer, userDetailsReducer, userReducer } from "./component/reducer/userReducer";
 import { legacy_createStore as createStore } from "redux";
 const { combineReducers, applyMiddleware } = require("redux");
@@ -22,7 +22,7 @@ const reducer = combineReducers({
     newOrder: newOrderReducer,
     myOrders: myOrdersReducer,
     orderDetails: orderDetailsReducer,
-    // newReview: newReviewReducer,
+    newReview: newReviewReducer,
     // product:productsReducer,
     product: productReducer,
     newProduct: newProductReducer,
@@ -30,8 +30,8 @@ const reducer = combineReducers({
     allOrders: allOrdersReducer,
     // update & delete order by admin 
     order: orderReducer,
-    // productReviews: productReviewReducer,
-    // review: reviewReducer,
+    productReviews: productReviewReducer,
+    review: reviewReducer,
     allUsers: allUserReducer,
     userDetails: userDetailsReducer,
     posts: postReducer,

@@ -6,9 +6,14 @@ import { Doughnut, Line } from 'react-chartjs-2';
 import "./Dashoard.css";
 import Sidebar from './Sidebar';
 import { Chart, CategoryScale, LinearScale, Title, Legend, BarController, LineController, PointElement, BarElement, LineElement, ArcElement } from 'chart.js';
+import { useSelector } from 'react-redux';
 // / Register necessary controllers and elements
 Chart.register(CategoryScale, LinearScale, Title, Legend, BarController, LineController, PointElement, BarElement, LineElement, ArcElement);
 const Dashboard = () => {
+    const { users } = useSelector((state) => state.allUsers);
+    const { products } = useSelector((state) => state.products);
+    const { orders } = useSelector((state) => state.allOrders);
+    const { posts } = useSelector((state) => state.posts);
 
     const Data = [
         {
@@ -94,19 +99,19 @@ const Dashboard = () => {
                 <div className='px-12 flex gap-5 mb-10'>
                     <Link className='w-96 h-52 bg-primary rounded-md flex flex-col justify-center items-center'>
                         <h1 className='text-center text-white font-bold text-3xl'> Total Products </h1>
-                        <p className='text-xl font-bold text-white text-center'> 100+ </p>
+                        <p className='text-xl font-bold text-white text-center'> {products?.length} + </p>
                     </Link>
                     <Link to="/admin/users" className='w-96 h-52 bg-orange-500 rounded-md flex flex-col justify-center items-center'>
                         <h1 className='text-center text-white font-bold text-3xl'> Total users </h1>
-                        <p className='text-xl font-bold text-white text-center'> 20+ </p>
+                        <p className='text-xl font-bold text-white text-center'> {users?.length}+ </p>
                     </Link>
                     <Link to="/admin/orders" className='w-96 h-52 bg-red-500 rounded-md flex flex-col justify-center items-center'>
                         <h1 className='text-center text-white font-bold text-3xl'> Total Orders </h1>
-                        <p className='text-xl font-bold text-white text-center'> 30+ </p>
+                        <p className='text-xl font-bold text-white text-center'> {orders?.length} + </p>
                     </Link>
                     <div className='w-96 h-52 rounded-md flex flex-col justify-center items-center bg-purple-700'>
-                        <h1 className='text-center text-white font-bold text-3xl'> Total Accessories  </h1>
-                        <p className='text-xl font-bold text-white text-center'> 150+ </p>
+                        <h1 className='text-center text-white font-bold text-3xl'> Total Blogs </h1>
+                        <p className='text-xl font-bold text-white text-center'> {posts?.length} + </p>
                     </div>
                 </div>
                 <div className='w-full flex flex-col lg:flex-row'>

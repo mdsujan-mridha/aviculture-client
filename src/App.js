@@ -47,6 +47,7 @@ import UpdateBlog from './component/Admin/UpdateBlog';
 import NewBlogPost from './component/Admin/NewBlogPost';
 import UpdateProdile from './component/User/UpdateProdile';
 import UpdatePassword from './component/User/UpdatePassword';
+import 'aos/dist/aos.css';
 
 function App() {
 

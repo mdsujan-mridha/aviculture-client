@@ -31,7 +31,7 @@ const Accessories = () => {
 
 
     // state for category 
-    const [category, setCategory] = useState("Bird-Nesting");
+    const [category, setCategory] = useState("Bird Cage");
     const [price, setPrice] = useState([10, 25000]);
     const [search, setSearch] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +49,7 @@ const Accessories = () => {
     }
     const clearFilter = () => {
         setPrice([0, 25000]);
-        setCategory("Bird-Nesting");
+        setCategory("Bird Cage");
 
     }
 

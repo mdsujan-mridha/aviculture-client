@@ -1,12 +1,22 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import Hero from './Hero';
-import HomeBlog from './HomeBlog';
+import HomeProduct from './HomeProduct';
+import RecentProduct from './RecentProduct';
+import BestSell from './BestSelll';
+import HomePost from './HomePost';
+
 
 const Home = () => {
+
+
+
     return (
         <Fragment>
             <Hero />
-            <HomeBlog />
+            < HomeProduct />
+            <RecentProduct />
+            <BestSell />
+            <HomePost />
         </Fragment>
     );
 };

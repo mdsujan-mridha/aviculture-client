@@ -1,24 +1,35 @@
 import React, { Fragment } from 'react';
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const HomeBlogCard = ({ blog }) => {
-    const { title, image } = blog;
+    // console.log(blog);
+
     return (
         <Fragment>
-            <div
-                className='
-                 flex flex-col text-center justify-center items-center  rounded-md text-white pb-5 pt-6 
-                 bg-secondary w-80
-             '>
-                <h1 className='text-3xl font-medium font-["Cabin"] pb-6'>{title}</h1>
-                <figure>
-                    <img className='max-w-full h-auto' src={image} alt="Bird_Image" />
-                </figure>
-                <div className='text-white mt-4'>
-                    <button type="button" className='py-3 px-4 rounded-3xl hover:bg-primary bg-accent'>Read More</button>
-                </div>
-            </div>
+            <Link to={`/blogs/${blog._id}`}>
+                <Card sx={{ maxWidth: 345 }}>
+                    <CardActionArea>
+                        <CardMedia
+                            component="img"
+                            height="140"
+                            image={blog?.images[0]?.url}
+                            alt="green iguana"
+                        />
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                                {blog?.title}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                {blog?.metaDescription}
+                            </Typography>
+                        </CardContent>
+                    </CardActionArea>
+                </Card>
+            </Link>
         </Fragment>
     );
+
 };
 
 export default HomeBlogCard;

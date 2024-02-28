@@ -1,18 +1,29 @@
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@mui/material';
 import React, { Fragment } from 'react';
 
 const HomeProductCard = ({ product }) => {
     const { title, price, image } = product;
     return (
         <Fragment>
-            <div className='flex flex-col justify-center items-center'>
-                <figure className='pt-7 pb-3 bg-secondary shadow-xl rounded-md'>
-                    <img className='max-w-full h-auto' src={image} alt="Bird_Image" />
-                </figure>
-                <div className='text-center'>
-                    <h3 className='mt-3 text-2xl hover:text-primary font-bold'>{title}</h3>
-                    <span className='mt-3 font-bold'>From ${price}</span>
-                </div>
-            </div>
+            <Card sx={{ maxWidth: 345 }}>
+                <CardActionArea>
+                    <CardMedia
+                        component="img"
+                        height="140"
+                        image="/static/images/cards/contemplative-reptile.jpg"
+                        alt="green iguana"
+                    />
+                    <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                            Lizard
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            Lizards are a widespread group of squamate reptiles, with over 6,000
+                            species, ranging across all continents except Antarctica
+                        </Typography>
+                    </CardContent>
+                </CardActionArea>
+            </Card>
         </Fragment>
     );
 };
